@@ -1,0 +1,12 @@
+
+spring:
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    consumer:
+      group-id: client1
+server:
+  port: 8081
+
+file:
+  upload-dir: ./uploads
