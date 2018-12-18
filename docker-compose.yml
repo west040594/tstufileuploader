@@ -1,7 +1,7 @@
 version: "2"
 services:
   fileuploadserver:
-    image: west040594/fileuploader
+    image: west040594/fileuploader:first
     volumes:
     - ./fileuploader_jar:/fileuploader
     ports:
