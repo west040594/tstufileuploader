@@ -1,13 +1,38 @@
 version: "2"
 services:
   fileuploadserver:
-    image: west040594/fileuploader:first
+    build:
+      context: ./fileuploader_jar
     volumes:
     - ./fileuploader_jar:/fileuploader
     ports:
-      - "8085:8080"
+      - "8081:8080"
     depends_on:
       - kafka
+  lighttpd:
+    image: sebp/lighttpd
+    volumes:
+      - ./clientsender:/var/www/localhost/htdocs
+    ports:
+      - "80:80"
+    depends_on:
+      - webpack
+      - fileuploadserver
+
+  webpack:
+    image: node:10-alpine
+    volumes:
+        - ./webpack:/app
+        - ./webpack/node_modules:/node_modules
+        - ./webpack/package.json:/package.json
+        - ./webpack/webpack.config.js:/webpack.config.js
+        - ./webpack/js:/js
+    ports:
+      - "8085:8085"
+    depends_on:
+      - fileuploadserver
+    working_dir: /app
+    command: ["npm", "start"]
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
@@ -56,5 +81,3 @@ services:
       - zookeeper
       - kafka
       - kafka-rest
-
-

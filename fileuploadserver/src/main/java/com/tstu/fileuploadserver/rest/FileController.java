@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RestController
+@CrossOrigin
 @Slf4j
 @RequiredArgsConstructor
 public class FileController {
